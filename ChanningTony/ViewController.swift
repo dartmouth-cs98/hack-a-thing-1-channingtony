@@ -31,7 +31,7 @@ class ViewController: UIViewController {
         
         floorNode.position=SCNVector3(anchor.center.x,0,anchor.center.z) // set plane position
         
-        floorNode.geometry?.firstMaterial?.diffuse.contents = UIColor.blue // set plane color
+        floorNode.geometry?.firstMaterial?.diffuse.contents = UIImage(named: "marble") // set plane to a marble tile
         
         floorNode.geometry?.firstMaterial?.isDoubleSided = true // make the plane double sided
         
