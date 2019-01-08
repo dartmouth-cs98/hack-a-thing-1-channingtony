@@ -39,6 +39,12 @@ class ViewController: UIViewController {
         return floorNode
     }
     
+    
+}
+
+
+
+extension ViewController:ARSCNViewDelegate{
     func renderer(_ renderer: SCNSceneRenderer, didAdd node: SCNNode, for anchor: ARAnchor) {
         guard let planeAnchor = anchor as? ARPlaneAnchor else {return} // check if anchor is a planee
         let planeNode = createFloorNode(anchor: planeAnchor) // create new floor node
@@ -64,8 +70,4 @@ class ViewController: UIViewController {
         }
     }
 }
-
-
-
-extension ViewController:ARSCNViewDelegate{}
 
