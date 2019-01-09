@@ -13,6 +13,29 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var sceneView: ARSCNView!
     let config = ARWorldTrackingConfiguration()
+    
+    // Naming SCNNodes
+    let floorNodeName = "FloorNode"
+    
+    func addTapGesture(){
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapped(sender:)))
+        tap.numberOfTapsRequired = 1
+        sceneView.addGestureRecognizer(tap)
+    }
+    
+    @objc func tapped(sender: UITapGestureRecognizer){
+        let sceneView = sender.view as! ARSCNView
+        let tapLocation = sender.location(in: sceneView)
+        
+        let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
+        if !hitTest.isEmpty{
+            print("Touched on the plane")
+        }
+        else{
+            print("Not a plane")
+        }
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -26,6 +49,7 @@ class ViewController: UIViewController {
 
     }
     
+    
     func createFloorNode(anchor:ARPlaneAnchor) ->SCNNode{
         let floorNode = SCNNode(geometry: SCNPlane(width: CGFloat(anchor.extent.x), height: CGFloat(anchor.extent.z))) // create a plane rooted to the anchor
         
@@ -36,6 +60,8 @@ class ViewController: UIViewController {
         floorNode.geometry?.firstMaterial?.isDoubleSided = true // make the plane double sided
         
         floorNode.eulerAngles = SCNVector3(Double.pi/2,0,0) // rotate so plane is horizontal
+        
+        floorNode.name = floorNodeName // naming floor node to distinguish it from others
         return floorNode
     }
     
