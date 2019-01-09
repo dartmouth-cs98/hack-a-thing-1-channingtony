@@ -2,7 +2,7 @@
 //  ViewController.swift
 //  ChanningTony
 //
-//  Created by Alex Chan on 1/8/19.
+//  Created by Alex Chan and Tony DiPadova on 1/8/19.
 //  Copyright © 2019 cs98. All rights reserved.
 //
 
@@ -29,6 +29,7 @@ class ViewController: UIViewController {
         
         let hitTest = sceneView.hitTest(tapLocation, types: .existingPlaneUsingExtent)
         if !hitTest.isEmpty{
+            addFurniture(hitTestResult: hitTest.first!)
             print("Touched on the plane")
         }
         else{
@@ -43,6 +44,7 @@ class ViewController: UIViewController {
         
         // For plane detection
         config.planeDetection = .horizontal
+        addTapGesture()
 
         sceneView.session.run(config)
         sceneView.delegate = self
@@ -63,6 +65,19 @@ class ViewController: UIViewController {
         
         floorNode.name = floorNodeName // naming floor node to distinguish it from others
         return floorNode
+    }
+    
+    func addFurniture(hitTestResult:ARHitTestResult){
+        
+        let furnitureName = "Table" // furniture name
+        
+        guard let scene = SCNScene(named: "furnitures.scnassets/\(furnitureName).scn") else{return} // create scene from furniture
+        
+        let node = (scene.rootNode.childNode(withName: furnitureName, recursively: false))!  // create scene node for furniture
+        let transform = hitTestResult.worldTransform  // transform for tap result
+        let thirdColumn = transform.columns.3 // get the tap location in the world grid
+        node.position = SCNVector3(thirdColumn.x, thirdColumn.y, thirdColumn.z)  // set the position of the furniture
+        self.sceneView.scene.rootNode.addChildNode(node)
     }
     
     
