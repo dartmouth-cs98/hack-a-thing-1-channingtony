@@ -15,4 +15,4 @@ We started by following a [tutorial](https://medium.freecodecamp.org/how-to-get-
 
 ### How It Works
 
-When you run the app the camera opens. If you move it around, eventually it will detect surfaces. Any horizontal surface is defined as the floor. 
+When you run the app the camera opens. If you move it around, eventually it will detect surfaces. Any horizontal surface is defined as the floor. An image of a marble floor is projected onto the surface. If you tap on the surface, a 3D table is placed on it which you can move around and look at.
